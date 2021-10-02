@@ -1,5 +1,5 @@
 import React,{ useEffect, useState } from "react";
-import { cleanObject } from "utils";
+import { cleanObject, useDebounce, useMount } from "utils";
 import { List } from "./list";
 import { SearchPannel } from "./search-pannel";
 import * as qs from "qs"
@@ -14,24 +14,25 @@ export const ProgectListScreen = () => {
       name: "",
       personId: "",
   });
-
+  const debounceValue = useDebounce(param,1000)
   useEffect(() => {
-    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then((response) => {
+    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceValue))}`).then((response) => {
       return response.json()
     }).then((data)=>{
       console.log('data,',data);
       setList(data)
     });
-  }, [param]);
+  }, [debounceValue]);
 
-  useEffect(() => {
+  useMount(() => {
     fetch( `${apiUrl}/users`).then((response) => {
       return response.json()
     }).then((data)=>{
       console.log('data,',data);
       setUsers(data)
     });
-  }, [])
+  })
+
   return (
     <div>
       <SearchPannel users={users} param={param} setParam={setParam}></SearchPannel>
