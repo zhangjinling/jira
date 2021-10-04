@@ -3,13 +3,16 @@ import { User } from "screens/progect-list/search-pannel";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const localstorageKey = "__auth_provider_toklen__";
+
 export const getToken = () => {
   return window.localStorage.getItem(localstorageKey);
 };
+
 export const handleUserResponse = (user: User) => {
   window.localStorage.setItem(localstorageKey, user.token || "");
   return user;
 };
+
 // 登录
 export const login = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/login`, {
@@ -27,6 +30,7 @@ export const login = (data: { username: string; password: string }) => {
     }
   });
 };
+
 // 注册
 export const register = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/register`, {
@@ -44,6 +48,7 @@ export const register = (data: { username: string; password: string }) => {
     }
   });
 };
+
 // 退出
 export const logout = async () => {
   window.localStorage.removeItem(localstorageKey);

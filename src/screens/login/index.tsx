@@ -15,7 +15,7 @@ export const LoginScreen = () => {
   };
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
-      {user ? <div>登录成功：用户名：{user?.name}</div> : null}
+      {/* {user ? <div>登录成功：用户名：{user?.name}</div> : null} */}
       <div>
         <label htmlFor="username">用户名</label>
         <input type="text" id={"username"}></input>
