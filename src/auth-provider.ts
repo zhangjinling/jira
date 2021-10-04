@@ -2,19 +2,23 @@ import { User } from "screens/progect-list/search-pannel";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const localstorageKey = "__auth_provider_toklen__";
+const localstorageKey = "__auth_provider_token__";
 
 export const getToken = () => {
   return window.localStorage.getItem(localstorageKey);
 };
 
-export const handleUserResponse = (user: User) => {
+export const handleUserResponse = ({ user }: { user: User }) => {
+  console.log("user:", user.token, user);
+
   window.localStorage.setItem(localstorageKey, user.token || "");
   return user;
 };
 
 // 登录
 export const login = (data: { username: string; password: string }) => {
+  console.log("login reques", data);
+
   return fetch(`${apiUrl}/login`, {
     method: "POST",
     headers: {
