@@ -15,13 +15,13 @@ export const http = async (
   const config = {
     method: "GET",
     headers: {
-      Authorization: token ? `Bear ${token}` : "",
-      "Content-type": data ? "application/json" : "",
+      Authorization: token ? `Bearer ${token}` : "",
+      "Content-Type": data ? "application/json" : "",
     },
     ...customConfig,
   };
-  if (config.method === "GET") {
-    endpoint += `${qs.stringify(data)}`;
+  if (config.method.toUpperCase() === "GET") {
+    endpoint += `?${qs.stringify(data)}`;
   } else {
     config.body = JSON.stringify(data || {});
   }
@@ -29,7 +29,7 @@ export const http = async (
     .fetch(`${apiUrl}/${endpoint}`, config)
     .then(async (response) => {
       if (response.status === 401) {
-        auth.logout();
+        await auth.logout();
         window.location.reload();
         return Promise.reject({ message: "请重新登录" });
       }
