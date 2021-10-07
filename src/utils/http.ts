@@ -44,6 +44,10 @@ export const http = async (
 
 export const useHttp = () => {
   const { user } = useAuth();
+  // utility types
   return (...[endpoint, config]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user ? user.token : "" });
 };
+// 联合类型：let a : string | number
+// 类型别名 type myFavo = string | number
+// 类型别名和interface可以互换
